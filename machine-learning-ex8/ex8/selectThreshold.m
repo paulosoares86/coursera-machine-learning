@@ -6,6 +6,8 @@ function [bestEpsilon bestF1] = selectThreshold(yval, pval)
 %   validation set (pval) and the ground truth (yval).
 %
 
+n = size(yval, 1);
+
 bestEpsilon = 0;
 bestF1 = 0;
 F1 = 0;
@@ -25,15 +27,15 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
 
+    outliers = pval < epsilon;
+    tp = sum((outliers == 1) & (yval == 1));
+    tn = sum((outliers == 0) & (yval == 0));
+    fp = sum((outliers == 1) & (yval == 0));
+    fn = sum((outliers == 0) & (yval == 1));
 
-
-
-
-
-
-
-
-
+    prec = safeDivision(tp, tp + fp);
+    recall = safeDivision(tp, tp + fn);
+    F1 = safeDivision(2 * prec * recall, prec + recall);
 
     % =============================================================
 

@@ -22,8 +22,9 @@ sigma2 = zeros(n, 1);
 %
 
 
-
-
+mu = mean(X);
+delta = X - mu;
+sigma2 = (1/m) * sum(delta .^ 2);
 
 
 
